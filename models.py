@@ -41,21 +41,21 @@ class User(Model):
 class BankAccount(Model):
     store = []
         
-    def unique_validation(self , attr_name : str) -> None:
+    def unique_validation(self , attr_name : str ,attr_value ) -> None:
          for account in self.__class__.store :
             if hasattr(account , attr_name):
-                assert account.attr_name != attr_name , f"Account {attr_name} already exists!"
+                assert getattr(account ,attr_name )!= attr_value , f"Account {attr_name} already exists!"
     
     def validate_name(self, name : str) -> None:
         assert isinstance(name ,str) and len(name) >= 4 , "Name must be a string and at least 4 characters long!"
         
     def validate_account_number(self, account_number : int) -> None:
         assert isinstance(account_number , int)  and account_number > 0 , "Account number must be a string and at least 4 characters long!"
-        self.unique_validation("account_number")
+        self.unique_validation("account_number" , account_number)
         
     def validate_cart_number(self, cart_number : int) -> None:
         assert isinstance(cart_number , int) and cart_number > 0 , "Cart number must be a string and at least 4 characters long!"
-        self.unique_validation("cart_number")
+        self.unique_validation("cart_number" , cart_number)
         
     def validate_balance(self, balance : int) -> None:
         assert isinstance(balance , int) and balance >= 0 , "Balance must be a string and positive!"
@@ -106,4 +106,6 @@ class BankAccount(Model):
 
     
         
+
+
  
